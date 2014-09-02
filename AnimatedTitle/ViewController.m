@@ -17,8 +17,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    [self.titleBar createLabelsFromTitles: @[@"Intercom", @"Inbox", @"Important", @"Upcoming"]];
+
+	NSMutableAttributedString *title1 = [[NSMutableAttributedString alloc] initWithString:@"Intercom"];
+	[title1 addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,5)];
+	
+    [self.titleBar createLabelsFromTitles: @[title1, @"Inbox", @"Important", @"Upcomming"]];
 }
 
 - (void)didReceiveMemoryWarning
