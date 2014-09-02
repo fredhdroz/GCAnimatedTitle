@@ -45,7 +45,9 @@
 {
     UIScrollView* aScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     aScrollView.delegate = self;
+	
     self.labels = [self addLabelsToScrollView:aScrollView];
+	
     self.scrollView = aScrollView;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.scrollsToTop = NO;
@@ -78,9 +80,7 @@
     [self.maskLayer setStartPoint:CGPointMake(0, 0.5)];
     [self.maskLayer setEndPoint:CGPointMake(1, 0.5)];
     
-    self.maskLayer.bounds = CGRectMake(0, 0,
-                                       self.frame.size.width,
-                                       self.frame.size.height);
+    self.maskLayer.bounds = self.bounds;
     self.maskLayer.anchorPoint = CGPointZero;
     
     self.layer.mask = self.maskLayer;
@@ -89,11 +89,15 @@
 - (NSArray*) addLabelsToScrollView:(UIScrollView*)aScrollView
 {
     NSMutableArray* labels = [NSMutableArray new];
-    if (self.titles.count == 0) {
+	
+    if (self.titles.count == 0)
+	{
         aScrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height);
-    } else {
-        float frameWidth = self.frame.size.width;
-        float frameHeight = self.frame.size.height;
+    }
+	else
+	{
+        float frameWidth = CGRectGetWidth(self.frame);
+        float frameHeight = CGRectGetHeight(self.frame);
         
         for (int i = 0; i < self.titles.count; ++i)
 		{
@@ -111,29 +115,26 @@
 			}
             
             [label sizeToFit];
+			
             // If it's the first label
             if (i == 0) {
-                CGRect newFrame = CGRectMake(frameWidth / 2 - label.frame.size.width / 2,
-                                             frameHeight/ 2 - label.frame.size.height / 2,
-                                             label.frame.size.width,
-                                             label.frame.size.height);
-                label.frame = newFrame;
+                label.frame = CGRectMake((frameWidth - CGRectGetWidth(label.frame)) / 2, (frameHeight - CGRectGetHeight(label.frame)) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
             }
-            else {
+            else
+			{
                 UILabel* previousLabel = labels[i - 1];
-                float labelXPos = frameWidth / 2 + previousLabel.frame.size.width / 2 + previousLabel.frame.origin.x;
-                CGRect newFrame = CGRectMake(labelXPos,
-                                             frameHeight/ 2 - label.frame.size.height / 2,
-                                             label.frame.size.width,
-                                             label.frame.size.height);
-                label.frame = newFrame;
+				
+                float labelXPos = (frameWidth + CGRectGetWidth(previousLabel.frame)) / 2 + CGRectGetMinX(previousLabel.frame);
+                label.frame = CGRectMake(labelXPos, (frameHeight - CGRectGetHeight(label.frame)) / 2, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame));
             }
+			
             [labels addObject:label];
+			
             [aScrollView addSubview:label];
         }
+		
         UILabel* lastLabel = [labels lastObject];
-        aScrollView.contentSize = CGSizeMake(lastLabel.frame.origin.x + lastLabel.frame.size.width / 2 + frameWidth / 2,
-                                             self.frame.size.height);
+        aScrollView.contentSize = CGSizeMake(lastLabel.frame.origin.x + (CGRectGetWidth(lastLabel.frame) + frameWidth) / 2, CGRectGetHeight(self.frame));
     }
     
     return labels;
@@ -141,7 +142,8 @@
 
 - (void) removeLabelsFromScrollView:(UIScrollView*)aScrollView
 {
-    for (UILabel* label in self.labels) {
+    for (UILabel* label in self.labels)
+	{
         [label removeFromSuperview];
     }
     self.labels = Nil;
@@ -152,7 +154,8 @@
     float frameSize = self.frame.size.width;
     
     // Change label opacity according to scroll
-    for (int i = 0; i < self.labels.count; ++i) {
+    for (int i = 0; i < self.labels.count; ++i)
+	{
         UILabel* label = self.labels[i];
         
         // Compute label opacity range
@@ -175,7 +178,8 @@
 
 #pragma mark - Scroll View Delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     [self updateLabelsOpacityForOffset:scrollView.contentOffset.x];
 }
 
