@@ -51,6 +51,9 @@
     self.scrollView.scrollsToTop = NO;
     [self addSubview:aScrollView];
     
+	self.defaultFont = [UIFont boldSystemFontOfSize:18];
+	self.defaultTextColor = [UIColor whiteColor];
+	
     [self createOpacityLayer];
 }
 
@@ -92,13 +95,21 @@
         float frameWidth = self.frame.size.width;
         float frameHeight = self.frame.size.height;
         
-        for (int i = 0; i < self.titles.count; ++i) {
-            CGRect frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+        for (int i = 0; i < self.titles.count; ++i)
+		{
+			id title = self.titles[i];
+			
+            UILabel* label = [[UILabel alloc] initWithFrame:self.bounds];
             [label setTextAlignment:NSTextAlignmentCenter];
-            label.text = self.titles[i];
-            label.font = [UIFont boldSystemFontOfSize:18];
-            [label setTextColor:[UIColor whiteColor]];
+			label.font = self.defaultFont;
+            label.textColor = self.defaultTextColor;
+			
+			if ([title isKindOfClass:[NSAttributedString class]]) {
+				label.attributedText = title;
+			}else{
+				label.text = [title description];
+			}
+            
             [label sizeToFit];
             // If it's the first label
             if (i == 0) {

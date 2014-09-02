@@ -10,6 +10,9 @@
 
 @interface GCAnimatedTitle : UIView
 
+@property (nonatomic, strong) UIFont *defaultFont;
+@property (nonatomic, strong) UIColor *defaultTextColor;
+
 - (void) createLabelsFromTitles:(NSArray*)titles;
 
 - (void) scrollTo:(float)progress;
