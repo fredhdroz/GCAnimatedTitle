@@ -167,7 +167,7 @@
         float progress = (relativePos.x - minOffset) / fabsf(maxOffset - minOffset);
         
         if (relativePos.x > minOffset && relativePos.x < maxOffset) {
-            opacity = cosf((progress + .5f) * 2 * M_PI) / 2.f + 0.5f;
+            opacity = cosf((progress + .5f) * 2 * M_PI) / 1.2f + 0.5f;
         } else {
             opacity = 0.f;
         }
