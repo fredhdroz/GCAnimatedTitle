@@ -200,6 +200,12 @@
     if (!self.labels.count) {
         return;
     }
+	
+	if (self.labels.count == 1)
+	{
+		self.scrollView.contentOffset = CGPointMake(0, 0);
+		return;
+	}
     
     float step = 1 / ((float)self.labels.count - 1);
     int n = floor(progress / step);
