@@ -103,7 +103,7 @@
 		{
 			id title = self.titles[i];
 			
-            UILabel* label = [[UILabel alloc] initWithFrame:self.bounds];
+            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frameWidth-50.0f, frameHeight)];
             [label setTextAlignment:NSTextAlignmentCenter];
 			label.font = self.defaultFont;
             label.textColor = self.defaultTextColor;
@@ -172,7 +172,7 @@
         float progress = (relativePos.x - minOffset) / fabsf(maxOffset - minOffset);
         
         if (relativePos.x > minOffset && relativePos.x < maxOffset) {
-            opacity = cosf((progress + .5f) * 2 * M_PI) / 1.2f + 0.5f;
+            opacity = cosf((progress + .5f) * 2 * M_PI) / 2.0f + 0.5f;
         } else {
             opacity = 0.f;
         }
