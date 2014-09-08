@@ -113,8 +113,13 @@
 			}else{
 				label.text = [title description];
 			}
-            
-            [label sizeToFit];
+			
+			if (self.adjustsFontSizeToFitWidth) {
+				label.minimumFontSize = self.defaultFont.pointSize - 5.0f;
+				label.adjustsFontSizeToFitWidth = YES;
+			}else{
+				[label sizeToFit];
+			}
 			
             // If it's the first label
             if (i == 0) {

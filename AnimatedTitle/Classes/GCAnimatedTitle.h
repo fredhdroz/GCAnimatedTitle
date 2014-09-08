@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UIFont *defaultFont;
 @property (nonatomic, strong) UIColor *defaultTextColor;
+@property (nonatomic, assign) BOOL adjustsFontSizeToFitWidth;
 
 - (void) createLabelsFromTitles:(NSArray*)titles;
 
