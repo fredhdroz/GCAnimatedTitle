@@ -72,9 +72,9 @@
                              (__bridge id)innerColor,
                              (__bridge id)outerColor, nil];
     self.maskLayer.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],
+                                [NSNumber numberWithFloat:0.05],
                                 [NSNumber numberWithFloat:0.1],
-                                [NSNumber numberWithFloat:0.2],
-                                [NSNumber numberWithFloat:0.8],
+                                [NSNumber numberWithFloat:0.9],
                                 [NSNumber numberWithFloat:1.0], nil];
     
     [self.maskLayer setStartPoint:CGPointMake(0, 0.5)];
