@@ -200,17 +200,26 @@
     self.labels = [self addLabelsToScrollView:self.scrollView];
 }
 
+- (void) showTitleAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+	CGFloat progress = 0.0;
+	if (self.labels.count > 0)
+		progress = (CGFloat)index / (CGFloat)self.labels.count;
+	
+	CGFloat newScrollPos = progress * self.scrollView.contentSize.width;
+	[self.scrollView setContentOffset:CGPointMake(newScrollPos, 0) animated:animated];
+}
+
 - (void) scrollTo:(float)progress
 {
-    if (!self.labels.count) {
-        return;
-    }
-	
-	if (self.labels.count == 1)
-	{
-		self.scrollView.contentOffset = CGPointMake(0, 0);
-		return;
-	}
+    CGFloat newScrollPos = [self scrollPositionForProgress:progress];
+    self.scrollView.contentOffset = CGPointMake(newScrollPos, 0);
+}
+
+- (CGFloat) scrollPositionForProgress : (CGFloat)progress
+{
+	if (self.labels.count == 0 || self.labels.count == 1)
+        return 0.0f;
     
     float step = 1 / ((float)self.labels.count - 1);
     int n = floor(progress / step);
@@ -237,8 +246,8 @@
     float nEnd = (n + 1) * step;
     float newProgress = (progress - nStart) / (nEnd - nStart);
     float newScrollPos = interpolate(start, end, newProgress);
-    
-    self.scrollView.contentOffset = CGPointMake(newScrollPos, 0);
+	
+	return newScrollPos;
 }
 
 #pragma mark - C Helper

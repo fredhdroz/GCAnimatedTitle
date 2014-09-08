@@ -16,6 +16,7 @@
 
 - (void) createLabelsFromTitles:(NSArray*)titles;
 
+- (void) showTitleAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void) scrollTo:(float)progress;
 
 @end
