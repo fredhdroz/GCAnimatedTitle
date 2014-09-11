@@ -203,10 +203,10 @@
 - (void) showTitleAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
 	CGFloat progress = 0.0;
-	if (self.labels.count > 0)
-		progress = (CGFloat)index / (CGFloat)self.labels.count;
+	if (self.labels.count > 1)
+		progress = (CGFloat)index / ((CGFloat)self.labels.count - 1);
 	
-	CGFloat newScrollPos = progress * self.scrollView.contentSize.width;
+	CGFloat newScrollPos = [self scrollPositionForProgress:progress];
 	[self.scrollView setContentOffset:CGPointMake(newScrollPos, 0) animated:animated];
 }
 
