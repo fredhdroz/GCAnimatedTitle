@@ -103,7 +103,7 @@
 		{
 			id title = self.titles[i];
 			
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frameWidth-50.0f, frameHeight)];
+            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frameWidth-20.0f, frameHeight)];
             [label setTextAlignment:NSTextAlignmentCenter];
 			label.font = self.defaultFont;
             label.textColor = self.defaultTextColor;
